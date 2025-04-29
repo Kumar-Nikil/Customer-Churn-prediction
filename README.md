@@ -1,138 +1,67 @@
 # <div align="center">Telecom Customer Churn Prediction</div>
 
-![Intro](https://github.com/Pradnya1208/Telecom-Customer-Churn-prediction/blob/main/output/customer%20churn.jpeg?raw=true)
+![Intro](https://github.com/Kumar-Nikil/Customer-Churn-prediction.git)
 
+# Customer Churn Prediction
 
+## Overview
 
-## What is Customer Churn?
-Customer churn is defined as when customers or subscribers discontinue doing business with a firm or service.
+Customer churn occurs when a customer discontinues their relationship with a business. In highly competitive sectors like telecom, where churn rates range between 15% to 25% annually, retaining customers is more cost-effective than acquiring new ones. This project aims to predict potential churners using customer behavioral and account data to support proactive retention strategies.
 
-Customers in the telecom industry can choose from a variety of service providers and actively switch from one to the next. The telecommunications business has an annual churn rate of 15-25 percent in this highly competitive market.
+## Objectives
 
-Individualized customer retention is tough because most firms have a large number of customers and can't afford to devote much time to each of them. The costs would be too great, outweighing the additional revenue. However, if a corporation could forecast which customers are likely to leave ahead of time, it could focus customer retention efforts only on these "high risk" clients. The ultimate goal is to expand its coverage area and retrieve more customers loyalty. The core to succeed in this market lies in the customer itself.
+- Determine the churn rate and distinguish between retained and lost customers.
+- Analyze key features that contribute to customer churn.
+- Identify the most effective machine learning model for predicting churn.
 
-Customer churn is a critical metric because it is much less expensive to retain existing customers than it is to acquire new customers.
+## Dataset
 
-To detect early signs of potential churn, one must first develop a holistic view of the customers and their interactions across numerous channels.As a result, by addressing churn, these businesses may not only preserve their market position, but also grow and thrive. More customers they have in their network, the lower the cost of initiation and the larger the profit. As a result, the company's key focus for success is reducing client attrition and implementing effective retention strategy.
-## Objectives:
-- Finding the % of Churn Customers and customers that keep in with the active services.
-- Analysing the data in terms of various features responsible for customer Churn
-- Finding a most suited machine learning model for correct classification of Churn and non churn customers.
+Source: [Telco Customer Churn - Kaggle](https://www.kaggle.com/bhartiprasad17/customer-churn-prediction/data)
 
-## Dataset:
- [Telco Customer Churn](https://www.kaggle.com/bhartiprasad17/customer-churn-prediction/data)
+Features include:
+- **Customer info**: tenure, contract type, payment method, billing method.
+- **Services**: internet, phone, streaming, tech support, online security.
+- **Demographics**: gender, senior citizen status, dependents.
+- **Churn**: whether a customer left in the last month.
 
-### The data set includes information about:
+## Tools & Libraries
 
-- Customers who left within the last month – the column is called Churn
-- Services that each customer has signed up for – phone, multiple lines, internet, online security, online backup, device protection, tech support, and streaming TV and movies
-- Customer account information – how long they’ve been a customer, contract, payment method, paperless billing, monthly charges, and total charges
-- Demographic info about customers – gender, age range, and if they have partners and dependents
-## Implementation:
+- Python, pandas, numpy, seaborn, matplotlib
+- Scikit-learn (Logistic Regression, Decision Tree, Random Forest, AdaBoost, Gradient Boosting, Voting Classifier)
 
-**Libraries:** sklearn, Matplotlib, pandas, seaborn, and NumPy
+## Exploratory Data Analysis (EDA)
 
+- **Contract Type**: ~75% of monthly contract users churned.
+- **Payment Method**: Electronic check users showed higher churn.
+- **Service Usage**: Lack of online security and tech support correlated with higher churn.
+- **Tenure**: Newer customers were more likely to churn.
+- **Charges**: Higher monthly charges increased churn probability.
 
+![Churn Distribution](https://github.com/Pradnya1208/Telecom-Customer-Churn-prediction/blob/main/output/Churn%20Distribution.png?raw=true)
 
-## Few glimpses of EDA:
-### 1. Churn distribution:
+## Model Building
 
-> ![Churn distribution](https://github.com/Pradnya1208/Telecom-Customer-Churn-prediction/blob/main/output/Churn%20Distribution.png?raw=true)
-> 26.6 % of customers switched to another firm.
+Trained and evaluated multiple models:
+- Logistic Regression
+- K-Nearest Neighbors
+- Gaussian Naive Bayes
+- Decision Tree
+- Random Forest
+- AdaBoost
+- Gradient Boosting
 
-### 2. Churn distribution with respect to gender:
-> ![Churn distribution wrt Gender](https://github.com/Pradnya1208/Telecom-Customer-Churn-prediction/blob/main/output/distributionWRTGender.PNG?raw=true)
+### Final Model: Voting Classifier
 
+Combined Logistic Regression, Gradient Boosting, and AdaBoost using soft voting.  
+Achieved an accuracy of **~84.6%**, outperforming individual models.
 
-> There is negligible difference in customer percentage/count who chnaged the service provider. Both genders behaved in similar fashion when it comes to migrating to another service provider/firm.`
+```python
+from sklearn.ensemble import VotingClassifier
+clf1 = GradientBoostingClassifier()
+clf2 = LogisticRegression()
+clf3 = AdaBoostClassifier()
 
-### 3. Customer Contract distribution:
-> ![Customer contract distribution](https://github.com/Pradnya1208/Telecom-Customer-Churn-prediction/blob/main/output/Contract%20distribution.png?raw=true)
-> About 75% of customer with Month-to-Month Contract opted to move out as compared to 13% of customrs with One Year Contract and 3% with Two Year Contract
-
-### 4. Payment Methods:
-> ![Distribution of Payments methods](https://github.com/Pradnya1208/Telecom-Customer-Churn-prediction/blob/main/output/payment%20methods.png?raw=true) ![Churn wrt payment methods](https://github.com/Pradnya1208/Telecom-Customer-Churn-prediction/blob/main/output/payment%20ethods%20with%20respectto%20churn.PNG?raw=true)
-
-> Major customers who moved out were having Electronic Check as Payment Method.
-> Customers who opted for Credit-Card automatic transfer or Bank Automatic Transfer and Mailed Check as Payment Method were less likely to move out.
-
-### 5. Internet services:
-
-> Several customers choose the Fiber optic service and it's also evident that the customers who use Fiber optic have high churn rate, this might suggest a dissatisfaction with this type of internet service.
-> Customers having DSL service are majority in number and have less churn rate compared to Fibre optic service.
-![Churn distribution w.r.t Internet services and Gender](https://github.com/Pradnya1208/Telecom-Customer-Churn-prediction/blob/main/output/internet%20services.PNG?raw=true)
-
-### 6. Dependent distribution:
-
-> Customers without dependents are more likely to churn.
-![Churn distribution w.r.t dependents](https://github.com/Pradnya1208/Telecom-Customer-Churn-prediction/blob/main/dependents.PNG?raw=true)
-
-### 7. Online Security:
-
-> As shown in following graph, most customers churn due to lack of online security
-![Churn distribution w.r.t online security](https://github.com/Pradnya1208/Telecom-Customer-Churn-prediction/blob/main/output/onlineSecurity.PNG?raw=true)
-
-### 8. Senior Citizen:
-
-> Most of the senior citizens churn; the number of senior citizens are very less in over all customer base.
-![Churn distribution w.r.t Senior Citizen](https://github.com/Pradnya1208/Telecom-Customer-Churn-prediction/blob/main/output/seniorCitzen.PNG?raw=true)
-
-### 9. Paperless Billing:
-
-> Customers with Paperless Billing are most likely to churn.
-![Churn distribution w.r.t mode of billing](https://github.com/Pradnya1208/Telecom-Customer-Churn-prediction/blob/main/output/billing.PNG?raw=true)
-
-### 10. Tech support:
-
-> As shown in following chart, customers with no TechSupport are most likely to migrate to another service provider.
-![Churn distribution w.r.t Tech support](https://github.com/Pradnya1208/Telecom-Customer-Churn-prediction/blob/main/output/techSupport.PNG?raw=true)
-
-### 11. Distribution w.r.t Charges and Tenure:
-> ![Monthly Charges](https://github.com/Pradnya1208/Telecom-Customer-Churn-prediction/blob/main/output/carges%20distribution.PNG?raw=true)
-> ![Total Charges](https://github.com/Pradnya1208/Telecom-Customer-Churn-prediction/blob/main/output/total%20charges.PNG?raw=true)
-> Customers with higher Monthly Charges are also more likely to churn.<br>
-> New customers are more likely to churn.
-
-#### Results after K fold cross validation:
-
-![Logistic Regression](https://github.com/Pradnya1208/Telecom-Customer-Churn-prediction/blob/main/output/LR.PNG?raw=true) 
-![KNN](https://github.com/Pradnya1208/Telecom-Customer-Churn-prediction/blob/main/output/KNN.PNG?raw=true)
-![Naive Bayes](https://github.com/Pradnya1208/Telecom-Customer-Churn-prediction/blob/main/output/Naive%20Bayes.PNG?raw=true)
-![Decision Tree](https://github.com/Pradnya1208/Telecom-Customer-Churn-prediction/blob/main/output/Decision%20trees.PNG?raw=true)
-![Random Forest](https://github.com/Pradnya1208/Telecom-Customer-Churn-prediction/blob/main/output/Random%20Forest.PNG?raw=true)
-![Adaboost](https://github.com/Pradnya1208/Telecom-Customer-Churn-prediction/blob/main/output/Adaboost.PNG?raw=true)
-![Gradient Boost](https://github.com/Pradnya1208/Telecom-Customer-Churn-prediction/blob/main/output/Gradient%20boost.PNG?raw=true)
-![Voting Classifier](https://github.com/Pradnya1208/Telecom-Customer-Churn-prediction/blob/main/output/Voting%20Classifier.PNG?raw=true)
-
-![Confusion Matrix](https://github.com/Pradnya1208/Telecom-Customer-Churn-prediction/blob/main/output/confusion_matrix_models.PNG?raw=true)
-#### Final Model: Voting Classifier
-* We have selected Gradient boosting, Logistic Regression, and Adaboost for our Voting Classifier.
-```
-    from sklearn.ensemble import VotingClassifier
-    clf1 = GradientBoostingClassifier()
-    clf2 = LogisticRegression()
-    clf3 = AdaBoostClassifier()
-    eclf1 = VotingClassifier(estimators=[('gbc', clf1), ('lr', clf2), ('abc', clf3)], voting='soft')
-    eclf1.fit(X_train, y_train)
-    predictions = eclf1.predict(X_test)
-    print("Final Accuracy Score ")
-    print(accuracy_score(y_test, predictions))
-```
-```
-Final Score 
-{'LogisticRegression': [0.841331397558646, 0.010495252078550477],
- 'KNeighborsClassifier': [0.7913242024807321, 0.008198993337848612],
- 'GaussianNB': [0.8232386881685605, 0.00741678015498337],
- 'DecisionTreeClassifier': [0.6470213137060805, 0.02196953973039052],
- 'RandomForestClassifier': [0.8197874155380965, 0.011556155864106703],
- 'AdaBoostClassifier': [0.8445838813774079, 0.01125665302188384],
- 'GradientBoostingClassifier': [0.844630629931458, 0.010723107447558198],
- 'VotingClassifier': [0.8468096379573085, 0.010887508320460332]}
-
-```
-
->From the confusion matrix we can see that: There are total 1383+166=1549 actual non-churn values and the algorithm predicts 1400 of them as non churn and 149 of them as churn. While there are 280+280=561 actual churn values and the algorithm predicts 280 of them as non churn values and 281 of them as churn values.
-## Optimizations
-
-We could use Hyperparamete Tuning or Feature enginnering methods to improve the accuracy further.
-
+eclf1 = VotingClassifier(estimators=[('gbc', clf1), ('lr', clf2), ('abc', clf3)], voting='soft')
+eclf1.fit(X_train, y_train)
+predictions = eclf1.predict(X_test)
+print("Accuracy:", accuracy_score(y_test, predictions))
